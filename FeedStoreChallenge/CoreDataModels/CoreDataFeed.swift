@@ -15,6 +15,10 @@ class CoreDataFeed: NSManagedObject {
 }
 
 extension CoreDataFeed {
+	static var defaultFetchRequest: NSFetchRequest<NSFetchRequestResult> {
+		return NSFetchRequest(entityName: CoreDataFeed.className())
+	}
+
 	func localFeedImages() -> [LocalFeedImage] {
 		feedImages.compactMap { image in
 			return (image as? CoreDataFeedImage)?.mapToLocalFeedImage()

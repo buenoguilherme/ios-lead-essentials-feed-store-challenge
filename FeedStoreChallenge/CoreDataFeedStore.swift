@@ -32,8 +32,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = context
 		context.perform {
 			do {
-				let request = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataFeed.className())
-				let result = try context.fetch(request)
+				let result = try context.fetch(CoreDataFeed.defaultFetchRequest)
 
 				if let feed = result.first as? CoreDataFeed {
 					completion(
@@ -56,8 +55,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				let request = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataFeed.className())
-				let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+				let deleteRequest = NSBatchDeleteRequest(fetchRequest: CoreDataFeed.defaultFetchRequest)
 
 				try context.execute(deleteRequest)
 				CoreDataFeed.createCoreDataFeed(feed, with: timestamp, in: context)
