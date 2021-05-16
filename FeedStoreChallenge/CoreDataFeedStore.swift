@@ -56,6 +56,10 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
+				let request = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataFeed.className())
+				let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+
+				try context.execute(deleteRequest)
 				CoreDataFeed.createCoreDataFeed(feed, with: timestamp, in: context)
 				try context.save()
 				completion(nil)
