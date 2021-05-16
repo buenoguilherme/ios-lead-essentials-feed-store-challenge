@@ -19,6 +19,10 @@ extension CoreDataFeed {
 		return NSFetchRequest(entityName: CoreDataFeed.className())
 	}
 
+	static var defaultDeleteRequest: NSBatchDeleteRequest {
+		return NSBatchDeleteRequest(fetchRequest: CoreDataFeed.defaultFetchRequest)
+	}
+
 	func localFeedImages() -> [LocalFeedImage] {
 		feedImages.compactMap { image in
 			return (image as? CoreDataFeedImage)?.mapToLocalFeedImage()

@@ -55,9 +55,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				let deleteRequest = NSBatchDeleteRequest(fetchRequest: CoreDataFeed.defaultFetchRequest)
-
-				try context.execute(deleteRequest)
+				try context.execute(CoreDataFeed.defaultDeleteRequest)
 				CoreDataFeed.createCoreDataFeed(feed, with: timestamp, in: context)
 				try context.save()
 				completion(nil)
@@ -72,9 +70,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				let deleteRequest = NSBatchDeleteRequest(fetchRequest: CoreDataFeed.defaultFetchRequest)
-
-				try context.execute(deleteRequest)
+				try context.execute(CoreDataFeed.defaultDeleteRequest)
 				try context.save()
 				completion(nil)
 			} catch {}
