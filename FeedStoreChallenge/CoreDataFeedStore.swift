@@ -73,7 +73,9 @@ public final class CoreDataFeedStore: FeedStore {
 				try context.execute(CoreDataFeed.defaultDeleteRequest)
 				try context.save()
 				completion(nil)
-			} catch {}
+			} catch {
+				completion(error)
+			}
 		}
 	}
 }
