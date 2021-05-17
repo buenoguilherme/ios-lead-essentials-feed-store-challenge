@@ -74,10 +74,9 @@ public final class CoreDataFeedStore: FeedStore {
 				if let feed = try CoreDataFeed.first(in: context) {
 					context.delete(feed)
 					try context.save()
-					completion(nil)
-				} else {
-					completion(nil)
 				}
+
+				completion(nil)
 			} catch {
 				context.rollback()
 				completion(error)
