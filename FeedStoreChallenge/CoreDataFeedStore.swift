@@ -32,9 +32,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = context
 		context.perform {
 			do {
-				let result = try context.fetch(CoreDataFeed.defaultFetchRequest)
-
-				if let feed = result.first as? CoreDataFeed {
+				if let feed = try CoreDataFeed.first(in: context) {
 					completion(
 						.found(
 							feed: feed.localFeedImages(),
@@ -55,9 +53,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				let result = try context.fetch(CoreDataFeed.defaultFetchRequest)
-
-				if let feed = result.first as? NSManagedObject {
+				if let feed = try CoreDataFeed.first(in: context) {
 					context.delete(feed)
 				}
 
@@ -75,9 +71,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				let result = try context.fetch(CoreDataFeed.defaultFetchRequest)
-
-				if let feed = result.first as? NSManagedObject {
+				if let feed = try CoreDataFeed.first(in: context) {
 					context.delete(feed)
 					try context.save()
 					completion(nil)

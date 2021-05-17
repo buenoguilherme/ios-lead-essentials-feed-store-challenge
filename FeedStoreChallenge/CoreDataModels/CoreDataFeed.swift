@@ -19,6 +19,10 @@ extension CoreDataFeed {
 		return NSFetchRequest(entityName: CoreDataFeed.className())
 	}
 
+	static func first(in context: NSManagedObjectContext) throws -> CoreDataFeed? {
+		return try context.fetch(CoreDataFeed.defaultFetchRequest).first as? CoreDataFeed
+	}
+
 	func localFeedImages() -> [LocalFeedImage] {
 		feedImages.compactMap { image in
 			return (image as? CoreDataFeedImage)?.mapToLocalFeedImage()
