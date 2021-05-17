@@ -70,10 +70,17 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				try context.execute(CoreDataFeed.defaultDeleteRequest)
-				try context.save()
-				completion(nil)
+				let result = try context.fetch(CoreDataFeed.defaultFetchRequest)
+
+				if let feed = result.first as? NSManagedObject {
+					context.delete(feed)
+					try context.save()
+					completion(nil)
+				} else {
+					completion(nil)
+				}
 			} catch {
+				context.rollback()
 				completion(error)
 			}
 		}
