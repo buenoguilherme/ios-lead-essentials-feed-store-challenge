@@ -53,10 +53,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				if let feed = try CoreDataFeed.first(in: context) {
-					context.delete(feed)
-				}
-
+				try CoreDataFeed.deleteFirst(in: context)
 				CoreDataFeed.createCoreDataFeed(feed, with: timestamp, in: context)
 				try context.save()
 				completion(nil)
@@ -71,11 +68,8 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				if let feed = try CoreDataFeed.first(in: context) {
-					context.delete(feed)
-					try context.save()
-				}
-
+				try CoreDataFeed.deleteFirst(in: context)
+				try context.save()
 				completion(nil)
 			} catch {
 				context.rollback()

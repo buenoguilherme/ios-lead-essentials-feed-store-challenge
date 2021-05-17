@@ -23,6 +23,12 @@ extension CoreDataFeed {
 		return try context.fetch(CoreDataFeed.defaultFetchRequest).first as? CoreDataFeed
 	}
 
+	static func deleteFirst(in context: NSManagedObjectContext) throws {
+		if let feed = try CoreDataFeed.first(in: context) {
+			context.delete(feed)
+		}
+	}
+
 	func localFeedImages() -> [LocalFeedImage] {
 		feedImages.compactMap { image in
 			return (image as? CoreDataFeedImage)?.mapToLocalFeedImage()
