@@ -55,7 +55,12 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				try context.execute(CoreDataFeed.defaultDeleteRequest)
+				let result = try context.fetch(CoreDataFeed.defaultFetchRequest)
+
+				if let feed = result.first as? NSManagedObject {
+					context.delete(feed)
+				}
+
 				CoreDataFeed.createCoreDataFeed(feed, with: timestamp, in: context)
 				try context.save()
 				completion(nil)

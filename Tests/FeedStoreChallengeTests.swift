@@ -96,6 +96,23 @@ class FeedStoreChallengeTests: XCTestCase, FailableFeedStoreSpecs {
 		assertThatInsertHasNoSideEffectsOnInsertionError(on: sut)
 	}
 
+	func test_insert_hasNoSideEffectsOnInsertionErrorWhenThereIsCache() throws {
+		let stub = NSManagedObjectContext.alwaysFailingSaveStub()
+		let initiallyCachedFeed = uniqueImageFeed()
+		let initialTimestamp = Date()
+		let sut = try makeSUT()
+
+		insert((initiallyCachedFeed, initialTimestamp), to: sut)
+
+		stub.startIntercepting()
+
+		let newFeed = uniqueImageFeed()
+		let newTimestamp = Date()
+		insert((newFeed, newTimestamp), to: sut)
+
+		expect(sut, toRetrieve: .found(feed: initiallyCachedFeed, timestamp: initialTimestamp))
+	}
+
 	func test_delete_deliversNoErrorOnEmptyCache() throws {
 		let sut = try makeSUT()
 
