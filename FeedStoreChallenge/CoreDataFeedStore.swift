@@ -32,17 +32,14 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = context
 		context.perform {
 			do {
-				if let feed = try CoreDataFeed.first(in: context) {
-					completion(
-						.found(
-							feed: feed.localFeedImages(),
-							timestamp: feed.timestamp
-						)
-					)
-				} else {
+				guard let feed = try CoreDataFeed.first(in: context) else {
 					completion(.empty)
 					return
 				}
+
+				completion(
+					.found(feed: feed.localFeedImages(), timestamp: feed.timestamp)
+				)
 			} catch {
 				completion(.failure(error))
 			}
