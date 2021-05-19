@@ -29,7 +29,7 @@ public final class CoreDataFeedStore: FeedStore {
 	}
 	
 	public func retrieve(completion: @escaping RetrievalCompletion) {
-		let context = context
+		let context = self.context
 		context.perform {
 			do {
 				guard let feed = try CoreDataFeed.first(in: context) else {
