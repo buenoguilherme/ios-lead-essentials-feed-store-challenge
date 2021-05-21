@@ -11,7 +11,7 @@ import CoreData
 @objc(CoreDataFeed)
 class CoreDataFeed: NSManagedObject {
 	@NSManaged public var timestamp: Date
-	@NSManaged public var feedImages: NSOrderedSet
+	@NSManaged public var images: NSOrderedSet
 }
 
 extension CoreDataFeed {
@@ -30,7 +30,7 @@ extension CoreDataFeed {
 	}
 
 	func localFeedImages() -> [LocalFeedImage] {
-		feedImages.compactMap { image in
+		images.compactMap { image in
 			return (image as? CoreDataFeedImage)?.mapToLocalFeedImage()
 		}
 	}
@@ -39,7 +39,7 @@ extension CoreDataFeed {
 	static func createCoreDataFeed(_ feed: [LocalFeedImage], with timestamp: Date, in context: NSManagedObjectContext) -> CoreDataFeed {
 		let coreDataFeed = CoreDataFeed(context: context)
 		coreDataFeed.timestamp = timestamp
-		coreDataFeed.feedImages = NSOrderedSet(array: feed.map { $0.mapToCoreData(in: context) })
+		coreDataFeed.images = NSOrderedSet(array: feed.map { $0.mapToCoreData(in: context) })
 		return coreDataFeed
 	}
 }
