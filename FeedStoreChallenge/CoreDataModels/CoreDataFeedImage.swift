@@ -14,7 +14,7 @@ final class CoreDataFeedImage: NSManagedObject {
 	@NSManaged var imageDescription: String?
 	@NSManaged var location: String?
 	@NSManaged var url: URL
-	@NSManaged var feed: CoreDataFeed
+	@NSManaged var feed: CoreDataFeed?
 }
 
 extension CoreDataFeedImage {
