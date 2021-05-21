@@ -52,9 +52,7 @@ public final class CoreDataFeedStore: FeedStore {
 			do {
 				try CoreDataFeed.deleteFirst(in: context)
 				CoreDataFeed.createCoreDataFeed(feed, with: timestamp, in: context)
-				if context.hasChanges {
-					try context.save()
-				}
+				try context.save()
 				completion(nil)
 			} catch {
 				context.rollback()
