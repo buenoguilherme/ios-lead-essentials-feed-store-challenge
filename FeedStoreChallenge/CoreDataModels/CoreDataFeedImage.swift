@@ -9,7 +9,7 @@
 import CoreData
 
 @objc(CoreDataFeedImage)
-class CoreDataFeedImage: NSManagedObject {
+final class CoreDataFeedImage: NSManagedObject {
 	@NSManaged var id: UUID
 	@NSManaged var imageDescription: String?
 	@NSManaged var location: String?

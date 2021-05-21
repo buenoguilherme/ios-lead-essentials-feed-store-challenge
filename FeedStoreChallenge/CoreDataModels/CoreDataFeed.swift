@@ -9,13 +9,13 @@
 import CoreData
 
 @objc(CoreDataFeed)
-class CoreDataFeed: NSManagedObject {
-	@NSManaged public var timestamp: Date
-	@NSManaged public var images: NSOrderedSet
+final class CoreDataFeed: NSManagedObject {
+	@NSManaged var timestamp: Date
+	@NSManaged var images: NSOrderedSet
 }
 
 extension CoreDataFeed {
-	static var defaultFetchRequest: NSFetchRequest<NSFetchRequestResult> {
+	private static var defaultFetchRequest: NSFetchRequest<NSFetchRequestResult> {
 		return NSFetchRequest(entityName: CoreDataFeed.className())
 	}
 

@@ -7,19 +7,19 @@ import CoreData
 public final class CoreDataFeedStore: FeedStore {
 	private static let modelName = "FeedStore"
 	private static let model = NSManagedObjectModel(name: modelName, in: Bundle(for: CoreDataFeedStore.self))
-	
+
 	private let container: NSPersistentContainer
 	private let context: NSManagedObjectContext
-	
+
 	struct ModelNotFound: Error {
 		let modelName: String
 	}
-	
+
 	public init(storeURL: URL) throws {
 		guard let model = CoreDataFeedStore.model else {
 			throw ModelNotFound(modelName: CoreDataFeedStore.modelName)
 		}
-		
+
 		container = try NSPersistentContainer.load(
 			name: CoreDataFeedStore.modelName,
 			model: model,
@@ -27,7 +27,7 @@ public final class CoreDataFeedStore: FeedStore {
 		)
 		context = container.newBackgroundContext()
 	}
-	
+
 	public func retrieve(completion: @escaping RetrievalCompletion) {
 		let context = self.context
 		context.perform {
@@ -36,7 +36,7 @@ public final class CoreDataFeedStore: FeedStore {
 					completion(.empty)
 					return
 				}
-				
+
 				completion(
 					.found(feed: feed.localFeedImages(), timestamp: feed.timestamp)
 				)
@@ -45,7 +45,7 @@ public final class CoreDataFeedStore: FeedStore {
 			}
 		}
 	}
-	
+
 	public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
 		let context = self.context
 		context.perform {
@@ -60,7 +60,7 @@ public final class CoreDataFeedStore: FeedStore {
 			}
 		}
 	}
-	
+
 	public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
 		let context = self.context
 		context.perform {
