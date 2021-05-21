@@ -36,10 +36,10 @@ extension CoreDataFeed {
 	}
 
 	@discardableResult
-	static func createCoreDataFeed(_ feed: [LocalFeedImage], with timestamp: Date, in context: NSManagedObjectContext) -> CoreDataFeed {
-		let coreDataFeed = CoreDataFeed(context: context)
-		coreDataFeed.timestamp = timestamp
-		coreDataFeed.images = NSOrderedSet(array: feed.map { $0.mapToCoreData(in: context) })
-		return coreDataFeed
+	static func createCoreDataFeed(_ images: [LocalFeedImage], with timestamp: Date, in context: NSManagedObjectContext) -> CoreDataFeed {
+		let feed = CoreDataFeed(context: context)
+		feed.timestamp = timestamp
+		feed.images = NSOrderedSet(array: images.map { $0.mapToCoreData(in: context) })
+		return feed
 	}
 }
